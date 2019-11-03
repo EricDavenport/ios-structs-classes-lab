@@ -1,4 +1,4 @@
-# Structs and Classes lab
+8# Structs and Classes lab
 
 Fork and clone this repo. On your fork, answer and commit the follow questions. When you are finished, submit the link to your repo on Canvas.
 
@@ -27,6 +27,17 @@ fred.homePlanet = "Mars"
 
 Fix the class definition for `Giant` in the space below so that it **does** work:
 
+```
+Answer: Must change LET homePlanet to VAR homeplanet. currently homePlanet is a constant
+class Giant {
+    var name: String = "Fred"
+    var weight: Double = 340.0
+    var homePlanet: String = "Earth"
+}
+let fred.homePlanet = "Mars"
+
+```
+
 
 ## Question 2
 
@@ -49,7 +60,19 @@ bilbo.height = 1.42
 bilbo.homePlanet = "Saturn"
 ```
 
+```
+Answer: 
+Yes the above code will work. bible name will be JAke, height will be 1.42 and homePlanet becomes Saturn
+```
+
 Change the declaration of `bilbo` so that the above three lines of code **do** work:
+
+
+```
+Answer: "let biblo" needs to be changed to var biblo to allow for changing of its properties
+
+var bilbo = Alien(name: "Bilbo", height: 1.67, homePlanet: "Venus")
+```
 
 
 ## Question 3
@@ -65,6 +88,11 @@ jason.name = "Jason"
 
 What will the value of `edgar.name` be after those three lines of code are run? What will the value of `jason.name` be? Why?
 
+```
+Answer:
+Both edgar and Jason both .namer values equal "Jason" due to both edgar and jason pointing to the same object 
+```
+
 
 ## Question 4
 
@@ -77,6 +105,15 @@ charlesFromJupiter.homePlanet = "Jupiter"
 ```
 
 What will the value of `charles.homePlanet` be after the above code run? What about the value of `charlesFromJupiter.homePlanet`? Why?
+
+```
+Answer:
+charles.homePlanet = Pluto and charlesFromJupiter.homePlanet = Jupiter
+
+The reason charles homePlanet = Pluto, because charles = Alien(homePlanet: "Pluto") - it is being given its value here
+charlesFromJupiter.homePlanet = "Jupiter" because the lin echarlesFromJupiter.homePlanet only declares the value for charlesFromJupiter and it is a var not let - allowing for changes to JUST charlesFromJupiter
+
+```
 
 
 ## Question 5
@@ -99,34 +136,118 @@ struct BankAccount {
 ```
 
 Does this code work? Why or why not?
+```
+Answer:
+Code does not work because in code func withdrawal and func deposit both are attempting to change the value of a property within the function but does not state it is mutating
+
+```
 
 Fix the `BankAccount` struct so it does work.
+```
+Answer:
+struct BankAccount {
+ var owner: String
+ var balance: Double
 
-Given the code below (which should incorporate any fixes you made):
+ mutating func deposit(_ amount: Double) {
+ balance += amount
+ }
 
-```swift
-var joeAccount = BankAccount(owner: "Joe", balance: 100.0)
-var joeOtherAccount = joeAccount
-joeAccount.withdraw(50.0)
+ mutating func withdraw(_ amount: Double) {
+ balance -= amount
+ }
+}
+the word mutating added to the front of func deposit snd func withdrawal
+
 ```
 
 What will the value of `joeAccount.balance` be after the above code runs? What about the value of `joeOtherAccount.balance`? Why?
+```
+joeAccount will equal 50.0 and joeOtherAccount = 100.0
+This is because joe only withdrsws 50.00 from his primary account
+account joeOtherAccount still equals 100.0 due to the fact no withdrawal or deposit function call onto the account
+
+```
 
 
 ## Question 6
 
 a. Write a struct called `Person` that has 3 properties of type `String`: a first name, a last name and a middle name. Have the middle name be optional. Create 2 instances of a `Person`, one with a middle name and one without. Print one of their first names.
+```
+Answer:
+struct Person {
+    var firstName: String
+    var lastName: String
+    var middleName: String?
+}
 
+let eric = Person(firstName: "Eric", lastName: "Davenport", middleName: "Dwayne")
+
+
+var emily = Person(firstName: "Emily", lastName: "Vand")
+
+print(emily.firstName)
+print(eric.firstName)
+```
 
 b. Write a method in `Person` called `fullName` that will return a formatted string of an instance's full name. Call this method on both the instances you created in part a.
+```
+Answer: 
+struct Person {
+    var firstName: String
+    var lastName: String
+    var middleName: String?
+    
+    func fullName() -> String{
+        let fullName = firstName + " " + (middleName ?? "") + " " + lastName
+        print(fullName)
+        return fullName
+    }
+    
+}
+
+let eric = Person(firstName: "Eric", lastName: "Davenport", middleName: "Dwayne")
 
 
+var emily = Person(firstName: "Emily", lastName: "Vand")
+
+print(emily.firstName)
+print(eric.firstName)
+
+print(emily.fullName())
+print(eric.fullName())
+
+```
 ## Question 7
 
 a. Create a struct called `Book` that has properties `title`, `author` and `rating`, of type `String`, `String`, and `Double` respectively. Create some instances of `Book`.
 
 
 b. Add a method to `Book` called `isGood` that returns `true` if its rating is greater than or equal to 7
+```
+Answer: 
+
+struct Book {
+    var title: String
+    var author: String
+    var rating: Double
+    
+    func isGood(rating: Double) -> Bool {
+        var goodOrBad: Bool = false
+        if rating >= 7 {
+            goodOrBad = true
+            print("Such a wonderful read")
+        } else if rating < 7 {
+            goodOrBad = false
+            print("This book isnt that great")
+        }
+        return goodOrBad
+    }
+}
+
+var myFavoriteBook = Book(title: "Becoming an iOS developer", author: "Eric D.", rating: 8)
+myFavoriteBook.isGood(rating: myFavoriteBook.rating
+```
 
 
 ## Question 8
@@ -149,6 +270,18 @@ dog1.mood //returns "calm"
 dog1.hungry //returns false
 ```
 
+```
+Answer:
+class Dog {
+    
+    var name: String = "Dog"
+    var breed: String = "unknown"
+    var mood: String = "calm"
+    var hungry: Bool = false
+
+}
+```
+
 b. Add an instance method called `playFetch()`. It should set the dog's `hungry` property to `true`, set its mood property to `playful`, and print "Ruff!"
 
 ```swift
@@ -163,7 +296,61 @@ dog2.hungry //returns true
 dog2.mood //returns "playful"
 ```
 
+```
+Answer:
+class Dog {
+    
+    var name: String = "Dog"
+    var breed: String = "unknown"
+    var mood: String = "calm"
+    var hungry: Bool = false
+    
+    
+    func playFetch() {
+        
+        var hungry = true
+        var mood = "playful"
+        
+        print("Ruff")
+        
+    }
+
+}
+```
+
 c. Add an instance method called `feed()`. If the dog is hungry, it should set `hungry` to `false` and print "Woof!" If the dog is not hungry, it should print "The dog doesn't look hungry"
+
+```
+Answer:
+class Dog {
+    
+    var name: String = "Dog"
+    var breed: String = "unknown"
+    var mood: String = "calm"
+    var hungry: Bool = false
+    
+    
+    func playFetch() {
+        
+        hungry = true
+        mood = "playful"
+        
+        print("Ruff")
+        
+    }
+    
+    func feed() {
+        if hungry {
+            hungry = false
+            print("Woof!")
+        } else {
+            print("The dog doesn't look hungry")
+        }
+    }
+
+}
+```
+
 
 ```swift
 var dog3 = Dog()
@@ -177,7 +364,43 @@ dog3.hungry //returns false
 ```
 
 d. Add an instance method called `toString` that returns a `String` type description of the dog:
+```
+Answer:
+class Dog {
+    
+    var name: String = "Dog"
+    var breed: String = "unknown"
+    var mood: String = "calm"
+    var hungry: Bool = false
+    
+    
+    func playFetch() {
+        
+        hungry = true
+        mood = "playful"
+        
+        print("Ruff")
+        
+    }
+    
+    func feed() {
+        if hungry {
+            hungry = false
+            print("Woof!")
+        } else {
+            print("The dog doesn't look hungry")
+        }
+    }
 
+    func toString() {
+        return print("""
+                        Name: \(name)
+                        Breed: \(breed)
+                        Mood: \(mood)
+                     """)
+    }
+}
+```
 ```swift
 var dog4 = Dog()
 dog4.name = "Rascal"
@@ -207,6 +430,16 @@ K = C + 273
 
 a. Make a struct called `FreezingPoint` that has three static properties: `celsius`, `fahrenheit`, and `kelvin`. Give them all values equal to the freezing point of water.
 
+```
+Answer:
+struct FreezingPoint {
+    static var celsius: Double = 0
+    static var fahrenheit: Double = 32
+    static var kelvin: Double = 273.15
+}
+
+```
+
 
 b. Make a struct called `Celsius` that has one property: `celsius`, and two methods `getFahrenheitTemp`, and `getKelvinTemp`. Make the values of `fahrenheit` and `kelvin` correct values, converted from the `celsius` property.
 
@@ -216,8 +449,59 @@ tenDegreesCelsius.celsius //returns 10.0
 tenDegreesCelsius.getKelvinTemp() //returns 283.0
 tenDegreesCelsius.getFahrenheitTemp() //returns 50.0
 ```
+```
+Answer: 
+struct Celsius {
+    var celsius: Double
+    
+    func getFahrenheitTemp() -> Double {
+        var fahrenheit: Double = 0.0
+        fahrenheit = 1.8 * celsius + 32
+        
+        return fahrenheit
+    }
+    
+    func getKelvinTemp() -> Double {
+        var kelvin: Double
+        kelvin = celsius + 273
+        
+        return kelvin
+    }
+}
+```
 
 c. Give the `Celsius` struct a method called `isBelowFreezing` that returns a `Bool` (true if the temperature is below freezing).
+
+```
+Answer:
+struct Celsius {
+    var celsius: Double
+    
+    func getFahrenheitTemp() -> Double {
+        var fahrenheit: Double = 0.0
+        fahrenheit = 1.8 * celsius + 32
+        
+        return fahrenheit
+    }
+    
+    func getKelvinTemp() -> Double {
+        var kelvin: Double
+        kelvin = celsius + 273
+        
+        return kelvin
+    }
+    
+    func isBelowFreezing() -> Bool {
+        var tooCold: Bool = false
+        
+        if celsius < FreezingPoint.celsius {
+            tooCold = true
+        }
+        return tooCold
+        
+    }
+}
+```
 
 
 ## Question 10
@@ -243,6 +527,27 @@ a. Create a struct called `Movie` that has properties for `name` (`String`), `ye
 b. Create an instance method inside `Movie` called `blurb` that returns a formatted string describing the movie.
 
 Ex: "Borat came out in 2006. It was an odd film starring Sacha Baron Cohen as a man named Borat who was visiting America from Kazakhstan."
+
+```
+Answer:
+struct Movie {
+    var name: String
+    var year: Int
+    var genre: String
+    var cast: [String]
+    var description: String
+    
+    func blurb() {
+        print("\(name) came out in \(year). It was an \(genre) film ataring \(cast). Described as a \(description)")
+    }
+    
+}
+
+let goodBurger = Movie(name: "Good Burger", year: 1991, genre: "Comedy", cast: ["Keenan Thomspson", "Kel Mitchel"] , description: "Funny movie from the 90s about two friends in a burger shop with the secret sauce")
+
+goodBurger.blurb()
+
+```
 
 
 ## Question 12
